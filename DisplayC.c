@@ -227,27 +227,34 @@ void desenho_pio(int numero) {
 void gpio_irq_handler(uint gpio, uint32_t events) {
     static bool led_green_state = false;
     static bool led_blue_state = false;
-    
-    // Verifica se o botão A foi pressionado (muda LED verde)
-    if (gpio == BUTTON_A) {
-        led_green_state = !led_green_state;
-        gpio_put(LED_G_PIN, led_green_state); // Liga/Desliga LED Verde
+    uint32_t current_time = to_us_since_boot(get_absolute_time()); // Obtém o tempo atual em microssegundos
 
-        // Atualiza a tela OLED
-        ssd1306_fill(&ssd, false);
-        ssd1306_draw_string(&ssd, led_green_state ? "VERDE ON" : "VERDE OFF", 20, 30);
-        ssd1306_send_data(&ssd);
-    }
+    if (current_time - last_time > 200000) { // Verifica se passaram mais de 200 ms desde o último evento (debouncing)
+        last_time = current_time;           // Atualiza o tempo do último evento
 
-    // Verifica se o botão B foi pressionado (muda LED azul)
-    if (gpio == BUTTON_B) {
-        led_blue_state = !led_blue_state;
-        gpio_put(LED_B_PIN, led_blue_state); // Liga/Desliga LED Azul
+        // Verifica se o botão A foi pressionado (muda LED verde)
+        if (gpio == BUTTON_A) {
+            led_green_state = !led_green_state;
+            gpio_put(LED_G_PIN, led_green_state); // Liga/Desliga LED Verde
 
-        // Atualiza a tela OLED
-        ssd1306_fill(&ssd, false);
-        ssd1306_draw_string(&ssd, led_blue_state ? "AZUL ON" : "AZUL OFF", 20, 30);
-        ssd1306_send_data(&ssd);
+            // Atualiza a tela OLED
+            ssd1306_fill(&ssd, false);
+            ssd1306_draw_string(&ssd, led_green_state ? "VERDE ON" : "VERDE OFF", 20, 30);
+            ssd1306_send_data(&ssd);
+            printf("Muda estado LED verde");
+        }
+
+        // Verifica se o botão B foi pressionado (muda LED azul)
+        if (gpio == BUTTON_B) {
+            led_blue_state = !led_blue_state;
+            gpio_put(LED_B_PIN, led_blue_state); // Liga/Desliga LED Azul
+
+            // Atualiza a tela OLED
+            ssd1306_fill(&ssd, false);
+            ssd1306_draw_string(&ssd, led_blue_state ? "AZUL ON" : "AZUL OFF", 20, 30);
+            ssd1306_send_data(&ssd);
+            printf("Muda estado LED azul");
+        }
     }
 }
 
