@@ -162,30 +162,49 @@ void ssd1306_draw_char(ssd1306_t *ssd, char c, uint8_t x, uint8_t y)
   if (c >= 'A' && c <= 'Z')
   {
     index = (c - 'A' + 11) * 8; // Para letras maiúsculas
-  }else  if (c >= '0' && c <= '9')
+  }
+  else  if (c >= '0' && c <= '9')
   {
     index = (c - '0' + 1) * 8; // Adiciona o deslocamento necessário
+}
+  else if (c == 'c')
+  {
+      index = 37 * 8; // Index for lowercase 'c'
   }
-      else if (c == 'c')
-    {
-        index = 37 * 8; // Index for lowercase 'c'
+  else if (c == 'a')
+  {
+      index = 38 * 8; // Index for lowercase 'a'
+  }
+  else if (c == 'm')
+  {
+      index = 39 * 8; // Index for lowercase 'm'
+  }
+  else if (c == 'i')
+  {
+      index = 40 * 8; // Index for lowercase 'i'
+  }
+  else if (c == 'l')
+  {
+      index = 41 * 8; // Index for lowercase 'l'
+  }
+
+  if (c == '!') {
+    // Desenha um "! gigante" (16x16 pixels)
+    for (uint8_t i = 0; i < 16; ++i) {
+        uint8_t line1 = big_exclamation_mark[i * 2];       // Parte alta do byte
+        uint8_t line2 = big_exclamation_mark[i * 2 + 1];   // Parte baixa do byte
+        for (uint8_t j = 0; j < 8; ++j) {
+            uint8_t pixel_on1 = (line1 >> (7 - j)) & 1;
+            uint8_t pixel_on2 = (line2 >> (7 - j)) & 1;
+
+            // Desenha os dois blocos (duplicando horizontalmente para maior legibilidade)
+            ssd1306_pixel(ssd, x + j, y + i, pixel_on1);
+            ssd1306_pixel(ssd, x + j + 8, y + i, pixel_on2);
+        }
     }
-    else if (c == 'a')
-    {
-        index = 38 * 8; // Index for lowercase 'a'
-    }
-    else if (c == 'm')
-    {
-        index = 39 * 8; // Index for lowercase 'm'
-    }
-    else if (c == 'i')
-    {
-        index = 40 * 8; // Index for lowercase 'i'
-    }
-    else if (c == 'l')
-    {
-        index = 41 * 8; // Index for lowercase 'l'
-    }
+    return; // Sai da função após desenhar o "! gigante"
+    
+  }  
   
   for (uint8_t i = 0; i < 8; ++i)
   {
