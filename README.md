@@ -1,14 +1,3 @@
-# Projeto: Controle de LEDs e Display com Microcontrolador
-
-## **Objetivos**
-- Compreender o funcionamento e a aplicação de comunicação serial em microcontroladores.
-- Aplicar os conhecimentos adquiridos sobre UART e I2C na prática.
-- Manipular e controlar LEDs comuns e LEDs endereçáveis WS2812.
-- Fixar o estudo do uso de botões de acionamento, interrupções e debounce.
-- Desenvolver um projeto funcional que combine hardware e software.
-
----
-
 ## **Descrição do Projeto**
 Este projeto utiliza a placa **BitDogLab** para implementar funcionalidades que combinam hardware e software, empregando os seguintes componentes:
 - **Matriz 5x5 de LEDs WS2812** conectada à GPIO 7.
@@ -79,3 +68,4 @@ O código principal é dividido nas seguintes seções:
    - Pressione os botões A e B para alternar os estados dos LEDs RGB Verde e Azul, respectivamente.
 
 ---
+## **Vídeo demostrativo:**
