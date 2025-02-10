@@ -9,6 +9,7 @@ Este projeto utiliza a placa **BitDogLab** para implementar funcionalidades que 
 Os caracteres suportados pelo sistema são:
 - Letras maiúsculas de **A a Z**.
 - Letras minúsculas específicas: **c, a, m, i, l**.
+- O símbolo **!**.
 - Números de **0 a 9**.
 
 ---
